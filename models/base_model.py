@@ -6,11 +6,13 @@ import models
 
 
 class BaseModel:
-
+    """"""
     def __init__(self, *args, **kwargs):
         """__init__'s Doc"""
-        if kwargs != {}:
+        if kwargs:
             for key in kwargs:
+                if key == "__class__":
+                    continue
                 if key == "updated_at" or key == "created_at":
                     self.__dict__[key] = \
                         datetime.strptime(kwargs[key], "%Y-%m-%dT%H:%M:%S.%f")
@@ -23,7 +25,8 @@ class BaseModel:
 
     def __str__(self):
         """__init__'s Doc"""
-        return "[BaseModel] ({}) {}".format(self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__, self.id,
+                                     self.__dict__)
 
     def save(self):
         """save's Doc   .isoformat()"""

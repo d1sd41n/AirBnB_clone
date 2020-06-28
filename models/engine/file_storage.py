@@ -33,7 +33,11 @@ class FileStorage:
             with open(self.__file_path, mode="r") as file:
                 dic = json.loads(file.read())
                 for key in dic:
-                    self.__objects[key] = models.BaseModel(dic[key])
+                    obj_name = key.split(".")[0]
+                    if obj_name == "BaseModel":
+                        self.__objects[key] = models.BaseModel(**dic[key])
+                    elif obj_name == "User":
+                        self.__objects[key] = models.User(**dic[key])
 
-        except (FileNotFoundError, json.decoder.JSONDecodeError):
+        except (FileNotFoundError, ValueError):
             self.__objects = {}
