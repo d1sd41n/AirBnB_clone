@@ -6,7 +6,7 @@ import models
 
 
 class BaseModel:
-    """"""
+    """doc"""
     def __init__(self, *args, **kwargs):
         """__init__'s Doc"""
         if kwargs:

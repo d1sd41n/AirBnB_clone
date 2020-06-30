@@ -5,10 +5,12 @@ import models
 
 
 class FileStorage:
+    """doc"""
     __objects = {}
     __file_path = "file.json"
 
     def all(self):
+        """doc"""
         return self.__objects
 
     def new(self, obj):
@@ -17,6 +19,7 @@ class FileStorage:
         self.__objects[name + "." + obj.id] = obj
 
     def save(self):
+        """doc"""
         dic = {}
         for key in self.__objects:
             dic[key] = self.__objects[key].to_dict()
@@ -26,6 +29,7 @@ class FileStorage:
             file.write(Json)
 
     def reload(self):
+        """doc"""
         try:
             with open(self.__file_path, mode="r") as file:
                 dic = json.loads(file.read())
