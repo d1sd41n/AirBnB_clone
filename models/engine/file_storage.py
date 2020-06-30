@@ -32,11 +32,8 @@ class FileStorage:
                 for key in dic:
                     obj_name = key.split(".")[0]
 
-                    self.__objects[key] = models.dic_classes[obj_name](**dic[key])
-                    #if obj_name == "BaseModel":
-                    #    self.__objects[key] = models.BaseModel(**dic[key])
-                    #elif obj_name == "User":
-                    #    self.__objects[key] = models.User(**dic[key])
+                    self.__objects[key] = \
+                        models.dic_classes[obj_name](**dic[key])
 
         except (FileNotFoundError, ValueError):
             self.__objects = {}

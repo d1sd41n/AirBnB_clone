@@ -78,6 +78,7 @@ class HBNBCommand(cmd.Cmd):
                         lis.append(str(dic[key]))
             else:
                 print("** class doesn't exist **")
+                return
         else:
             for key in dic:
                 lis.append(str(dic[key]))
@@ -154,7 +155,7 @@ class HBNBCommand(cmd.Cmd):
                         lis.append(str(dic[key]))
                 print(len(lis))
         else:
-            self.stdout.write('*** Unknown syntax: %s\n'%line)
+            self.stdout.write('*** Unknown syntax: %s\n' % line)
 
 
 if __name__ == '__main__':
