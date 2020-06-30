@@ -3,11 +3,12 @@
 import cmd
 import models
 
+
 class HBNBCommand(cmd.Cmd):
     """Simple command processor example."""
     prompt = '(hbnb) '
-    classes = ["BaseModel", "User"]
-    dic_classes = {"BaseModel":models.BaseModel, "User":models.User}
+    classes = ["BaseModel", "User", "Place",
+               "City", "Amenity", "Review", "State"]
     attr_list = ["id", "created_at", "updated_at"]
 
     def do_create(self, objeto):
@@ -16,7 +17,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         if objeto in self.classes:
-            obj = self.dic_classes[objeto]()
+            obj = models.dic_classes[objeto]()
             obj.save()
             print(obj.id)
         else:
@@ -101,7 +102,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         name = options[0] + "." + options[1]
-        if not name in dic:
+        if name not in dic:
             print("** no instance found **")
             return
 
@@ -114,7 +115,14 @@ class HBNBCommand(cmd.Cmd):
             return
 
         options[3] = options[3].replace("\"", "")
-        dic[name].__dict__[options[2]] = type(dic[name].__dict__[options[2]])(options[3])
+        f = False
+        if options[2] in models.dic_classes[options[0]].__dict__:
+            value = models.dic_classes[options[0]].__dict__[options[2]]
+            f = True
+        if f:
+            dic[name].__dict__[options[2]] = type(value)(options[3])
+        else:
+            dic[name].__dict__[options[2]] = options[3]
         models.storage.save()
 
     def emptyline(self):
@@ -128,6 +136,26 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self, line):
         """Exit command"""
         return True
+
+    def default(self, line):
+        """Called on an input line when the command prefix is not recognized.
+        If this method is not overridden, it prints an error message and
+        returns.
+        """
+        line = line.split(".")
+        if line[0] in self.classes:
+            if line[1] == "all()":
+                self.do_all(line[0])
+            elif line[1] == "count()":
+                dic = models.storage.all()
+                lis = []
+                for key in dic:
+                    if line[0] == key.split(".")[0]:
+                        lis.append(str(dic[key]))
+                print(len(lis))
+        else:
+            self.stdout.write('*** Unknown syntax: %s\n'%line)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

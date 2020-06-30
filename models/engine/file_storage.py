@@ -8,9 +8,6 @@ class FileStorage:
     __objects = {}
     __file_path = "file.json"
 
-    # def __init__(self, *args, **kwargs):
-    #     pass
-
     def all(self):
         return self.__objects
 
@@ -34,10 +31,12 @@ class FileStorage:
                 dic = json.loads(file.read())
                 for key in dic:
                     obj_name = key.split(".")[0]
-                    if obj_name == "BaseModel":
-                        self.__objects[key] = models.BaseModel(**dic[key])
-                    elif obj_name == "User":
-                        self.__objects[key] = models.User(**dic[key])
+
+                    self.__objects[key] = models.dic_classes[obj_name](**dic[key])
+                    #if obj_name == "BaseModel":
+                    #    self.__objects[key] = models.BaseModel(**dic[key])
+                    #elif obj_name == "User":
+                    #    self.__objects[key] = models.User(**dic[key])
 
         except (FileNotFoundError, ValueError):
             self.__objects = {}
