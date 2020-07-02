@@ -51,6 +51,9 @@ $ echo "create User" | console.py
 $
 ```
 
+### Structure
+<a href="https://ibb.co/gS6vpdN"><img src="https://i.ibb.co/Byw4xGb/pld-1.png" alt="pld-1" border="0"></a><br /><a target='_blank' href='https://es.imgbb.com/'>formatos de fotos</a><br />
+
 #### Comands:
 
 - help: displays all commands available
